@@ -1,4 +1,3 @@
-from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
@@ -20,8 +19,9 @@ async def get_authors(session: AsyncSession) -> list[AuthorBase]:
     return authors
 
 async def get_author(author_id: int, session: AsyncSession) -> AuthorBase | None:
-    return await get_author_by_id(author_id, session)
-    
+    author = await get_author_by_id(author_id, session)
+    return author
+
 async def update_author(author_id: int, author_update: AuthorBase, session: AsyncSession) -> Author | None:
     author = await get_author_by_id(author_id, session)
     if author is not None:
