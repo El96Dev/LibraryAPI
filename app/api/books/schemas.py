@@ -6,3 +6,7 @@ class BookBase(BaseModel):
     description: str
     author_id: int
     quantity: int
+
+
+class BookGet(BookBase):
+    id: int

@@ -10,6 +10,7 @@ class BorrowBase(BaseModel):
 
 
 class BorrowGet(BorrowBase):
+    id: int
     return_date: date | None
 
 
