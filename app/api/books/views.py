@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from . import crud
@@ -13,7 +13,7 @@ async def get_books(session: AsyncSession=Depends(db_helper.scoped_session_depen
     books = await crud.get_books(session)
     return books
 
-@router.post("")
+@router.post("", status_code=status.HTTP_201_CREATED)
 async def create_book(new_book: BookBase, session: AsyncSession=Depends(db_helper.scoped_session_dependency)) -> BookGet | None:
     book = await crud.create_book(new_book, session)
     return book
@@ -28,6 +28,6 @@ async def update_book(book_id: int, book_update: BookBase, session: AsyncSession
     book = await crud.update_book(book_id, book_update, session)
     return book    
 
-@router.delete("/{book_id}")
+@router.delete("/{book_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_book(book_id: int, session: AsyncSession=Depends(db_helper.scoped_session_dependency)) -> None:
     await crud.delete_book(book_id, session)

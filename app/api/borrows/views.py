@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from . import crud
@@ -18,7 +18,7 @@ async def get_borrow(borrow_id: int, session: AsyncSession=Depends(db_helper.sco
     borrow = await crud.get_borrow(borrow_id, session)
     return borrow
 
-@router.post("")
+@router.post("", status_code=status.HTTP_201_CREATED)
 async def create_borrow(new_borrow: BorrowBase, session: AsyncSession=Depends(db_helper.scoped_session_dependency)) -> BorrowGet | None:
     borrow = await crud.create_borrow(new_borrow, session)
     return borrow
