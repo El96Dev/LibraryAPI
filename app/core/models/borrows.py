@@ -3,7 +3,7 @@ from datetime import date
 from sqlalchemy import String, Date, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
-from base import Base
+from .base import Base
 
 
 class Borrow(Base):

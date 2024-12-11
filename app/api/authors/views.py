@@ -2,11 +2,11 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.models import db_helper
-from schemas import AuthorBase
-import crud
+from .schemas import AuthorBase
+from . import crud
 
 
-router = APIRouter()
+router = APIRouter(tags=["Authors"])
 
 @router.get("")
 async def get_authors(session: AsyncSession=Depends(db_helper.scoped_session_dependency)) -> list[AuthorBase]:

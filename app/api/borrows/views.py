@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-import crud
+from . import crud
 from core.models import db_helper
-from schemas import BorrowBase, BorrowGet, BorrowUpdate
+from .schemas import BorrowBase, BorrowGet, BorrowUpdate
 
 
-router = APIRouter()
+router = APIRouter(tags=["Borrows"])
 
 @router.get("")
 async def get_borrows(session: AsyncSession=Depends(db_helper.scoped_session_dependency)) -> list[BorrowGet]:

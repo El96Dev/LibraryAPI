@@ -3,10 +3,10 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
-from schemas import BookBase
+from .schemas import BookBase
+from .dependencies import get_book_by_id
 from core.models import Book
-from dependencies import get_book_by_id
-from authors.dependencies import get_author_by_id
+from ..authors.dependencies import get_author_by_id
 
 
 async def create_book(new_book: BookBase, session: AsyncSession) -> BookBase | None:

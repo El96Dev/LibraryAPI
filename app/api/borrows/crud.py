@@ -2,11 +2,10 @@ from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-import crud
 from core.models import Borrow
-from schemas import BorrowBase, BorrowGet, BorrowUpdate
-from dependencies import get_borrow_by_id, get_book_quantity, check_if_book_exists
-from books.dependencies import get_book_by_id
+from .schemas import BorrowBase, BorrowGet, BorrowUpdate
+from .dependencies import get_borrow_by_id, get_book_quantity
+from ..books.dependencies import get_book_by_id
 
 
 async def get_borrow(borrow_id: int, session: AsyncSession) -> BorrowGet | None:

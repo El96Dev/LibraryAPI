@@ -1,7 +1,7 @@
 from sqlalchemy import String, Text, Integer, ForeignKey, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
-from base import Base
+from .base import Base
 
 
 class Book(Base):

@@ -1,9 +1,10 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
-from schemas import AuthorBase
+from .schemas import AuthorBase
+from .dependencies import get_author_by_id
 from core.models import Author
-from dependencies import get_author_by_id
+
 
 
 async def create_author(new_author: AuthorBase, session: AsyncSession) -> AuthorBase:

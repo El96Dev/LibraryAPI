@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  fastapi:
+    build: .
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=library
+      - DB_HOST=pgdb
+      - DB_PORT=5432
+    command: >
+      sh -c "alembic upgrade head
+             python3 main.py"
+    depends_on:
+      pgdb:
+        condition: service_healthy
+
+  pgdb:
+    image: postgres
+    environment:
+      - POSTGRES_DB=library
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PORT=5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d library"]
+      interval: 2s
+      timeout: 2s
+      retries: 5
+
+volumes:
+  pgdata:
