@@ -26,8 +26,10 @@ async def get_author(author_id: int, session: AsyncSession) -> AuthorGet | None:
 async def update_author(author_id: int, author_update: AuthorBase, session: AsyncSession) -> Author | None:
     author = await get_author_by_id(author_id, session)
     if author is not None:
-        for key, value in author_update.items():
-            setattr(author, key, value)
+        author.firstname = author_update.firstname
+        author.lastname = author_update.lastname
+        author.birth_date = author_update.birth_date
+        await session.commit()
         return author
     
 async def delete_author(author_id: int, session: AsyncSession) -> None:

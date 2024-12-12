@@ -28,7 +28,6 @@ async def update_author(author_id: int, author_update: AuthorBase, session: Asyn
     author = await crud.update_author(author_id, author_update, session)
     return author
 
-
 @router.delete("/{author_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_author(author_id: int, session: AsyncSession=Depends(db_helper.scoped_session_dependency)) -> None:
     await crud.delete_author(author_id, session)

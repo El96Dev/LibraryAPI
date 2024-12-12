@@ -35,8 +35,10 @@ async def update_book(book_id: int, book_update: BookBase, session: AsyncSession
     try:
         book = await get_book_by_id(book_id, session)
         if book is not None:
-            for key, value in book_update.items():
-                setattr(book, key, value)
+            book.author_id = book_update.author_id
+            book.title = book_update.title
+            book.description = book_update.description
+            book.quantity = book_update.quantity
             await session.commit()
             return book
     except IntegrityError as e:

@@ -15,7 +15,7 @@ services:
       - DB_PORT=5432
     command: >
       sh -c "alembic upgrade head
-             python3 main.py"
+             pytest -v tests"
     depends_on:
       pgdb:
         condition: service_healthy
