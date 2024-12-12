@@ -10,4 +10,8 @@ class Book(Base):
     title: Mapped[str] = mapped_column(String)
     description: Mapped[str] = mapped_column(Text) 
     author_id: Mapped[int] = mapped_column(ForeignKey("authors.id"))
-    quantity: Mapped[int] = mapped_column(Integer, CheckConstraint("quantity >= 0"))
+    quantity: Mapped[int] = mapped_column(Integer)
+
+    __table_args__ = (
+        CheckConstraint('quantity >= 0', name='check_quantity_non_negative'),
+    )

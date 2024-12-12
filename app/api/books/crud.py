@@ -18,7 +18,7 @@ async def create_book(new_book: BookBase, session: AsyncSession) -> BookGet | No
             await session.commit()
             return book_db
     except IntegrityError as e:
-        raise HTTPException(status_code=400, detail="Quantity must be a positive integer")
+        raise HTTPException(status_code=400, detail="Quantity must be a positive integer!")
     
 
 async def get_books(session: AsyncSession) -> list[BookGet]:
@@ -42,7 +42,7 @@ async def update_book(book_id: int, book_update: BookBase, session: AsyncSession
             await session.commit()
             return book
     except IntegrityError as e:
-        raise HTTPException(status_code=400, detail="Quantity must be a positive integer")
+        raise HTTPException(status_code=400, detail="Quantity must be a positive integer!")
 
 async def delete_book(book_id: int, session: AsyncSession) -> None:
     book = await get_book_by_id(book_id, session)
