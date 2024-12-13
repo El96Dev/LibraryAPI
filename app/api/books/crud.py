@@ -10,16 +10,14 @@ from ..authors.dependencies import get_author_by_id
 
 
 async def create_book(new_book: BookBase, session: AsyncSession) -> BookGet | None:
-    try:
-        author = await get_author_by_id(new_book.author_id, session)
-        if author is not None:
-            book_db = Book(**new_book.model_dump())
-            session.add(book_db)
-            await session.commit()
-            return book_db
-    except IntegrityError as e:
+    if new_book.quantity < 0:
         raise HTTPException(status_code=400, detail="Quantity must be a positive integer!")
-    
+    author = await get_author_by_id(new_book.author_id, session)
+    if author is not None:
+        book_db = Book(**new_book.model_dump())
+        session.add(book_db)
+        await session.commit()
+        return book_db
 
 async def get_books(session: AsyncSession) -> list[BookGet]:
     stmt = select(Book)
