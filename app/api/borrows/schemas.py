@@ -6,7 +6,7 @@ from pydantic import BaseModel
 class BorrowBase(BaseModel):
     book_id: int
     reader: str
-    issued_date: date
+    issue_date: date
 
 
 class BorrowGet(BorrowBase):

@@ -20,6 +20,10 @@ async def get_borrows(session: AsyncSession) -> list[BorrowGet]:
 
 async def update_borrow(borrow_id: int, borrow_update: BorrowUpdate, session: AsyncSession) -> BorrowGet | None:
     borrow = await get_borrow_by_id(borrow_id, session)
+    if borrow.return_date is not None:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Return date is already set!")
+    if borrow.issue_date > borrow_update.return_date:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="The return date must be later than the issue date!")
     if borrow is not None:
         borrow.return_date = borrow_update.return_date
         await session.commit()

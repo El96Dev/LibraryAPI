@@ -10,7 +10,7 @@ async def get_borrow_by_id(borrow_id: int, session: AsyncSession) -> Borrow | No
     result = await session.execute(stmt)
     borrow = result.scalars().one_or_none()
     if not borrow:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Borrow with id {borrow_id} wans't found!")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Borrow with id {borrow_id} wasn't found!")
     else:
         return borrow
 
@@ -21,5 +21,6 @@ async def get_book_quantity(book_id: int, session: AsyncSession) -> int | None:
     if book is not None:
         return book.quantity
     else:
+        print(f"No book found {book_id}")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Book with id {book_id} wasn't found!")
     
