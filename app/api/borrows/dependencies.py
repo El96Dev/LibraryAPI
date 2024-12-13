@@ -24,3 +24,11 @@ async def get_book_quantity(book_id: int, session: AsyncSession) -> int | None:
         print(f"No book found {book_id}")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Book with id {book_id} wasn't found!")
     
+async def get_book_by_id(book_id: int, session: AsyncSession) -> Book | None:
+    stmt = select(Book).where(Book.id==book_id)
+    result = await session.execute(stmt)
+    book = result.scalars().one_or_none()
+    if book is not None:
+        return book
+    else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Book with id {book_id} wasn't found!")
